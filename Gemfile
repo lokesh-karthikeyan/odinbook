@@ -65,3 +65,5 @@ end
 gem "bulma-rails", "~> 1.0.0"
 
 gem "dartsass-rails", "~> 0.5.1"
+
+gem "devise", "~> 4.9"
