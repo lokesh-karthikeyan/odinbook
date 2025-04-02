@@ -1,11 +1,17 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" data-turbo-cache="false">
+  <div
+    id="error_explanation"
+    data-turbo-cache="false"
+    class="has-text-left has-text-danger is-size-5 mb-3"
+  >
     <h2>
-      <%= I18n.t("errors.messages.not_saved",
-                 count: resource.errors.count,
-                 resource: resource.class.model_name.human.downcase)
-       %>
+      <%= I18n.t(
+        "errors.messages.not_saved",
+        count: resource.errors.count,
+        resource: resource.class.model_name.human.downcase,
+      ) %>
     </h2>
+    <hr class="login-hr has-background-danger">
     <ul>
       <% resource.errors.full_messages.each do |message| %>
         <li><%= message %></li>
