@@ -11,17 +11,45 @@ class User < ApplicationRecord
     omniauth_providers: %i[github]
   )
 
+  after_create :create_profile, :attach_avatar
+
   has_many :active_relations, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following, through: :active_relations, source: :followee
 
   has_many :passive_relations, class_name: "Relationship", foreign_key: "followee_id", dependent: :destroy
   has_many :followers, through: :passive_relations, source: :follower
 
+  has_one :profile, inverse_of: :user, dependent: :destroy
+
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      # user.name = auth.info.name   # assuming the user model has a name
+      user.profile.name = auth.info.name
+      user.profile.bio = auth.info.bio
+      user.create_profile
     end
+  end
+
+  private
+
+  def create_profile = (build_profile(username: generate_unique_username).save)
+
+  def base_username = (email.split("@").first)
+
+  def generate_unique_username
+    loop do
+      unique_username = "#{base_username}_#{SecureRandom.hex(2)}"
+      break unique_username unless Profile.exists?(username: unique_username)
+    end
+  end
+
+  def attach_avatar
+    initials = base_username.first.upcase
+    svg_content = AvatarGenerator.create_initials_avatar(initials)
+    temp_file = Tempfile.new([ "avatar", ".svg" ], binmode: true)
+    temp_file.write(svg_content)
+    temp_file.rewind
+    profile.avatar.attach(io: temp_file, filename: "avatar.svg", content_type: "image/svg+xml")
   end
 end
