@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     unauthenticated(:user) do
       root(to: "devise/sessions#new")
     end
+
+    match("login", to: "devise/sessions#new", via: [ :get, :post ])
+    match("sign_up", to: "devise/registrations#new", via: [ :get, :post ])
   end
 
   resources(:posts)
