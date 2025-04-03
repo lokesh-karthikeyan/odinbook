@@ -11,6 +11,10 @@ class User < ApplicationRecord
     omniauth_providers: %i[github]
   )
 
+  has_many :relationships
+  has_many :followers, through: :relationships, foreign_key: "follower_id", source: :follower, dependent: :destroy
+  has_many :following, through: :relationships, foreign_key: "followee_id", source: :followee, dependent: :destroy
+
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
