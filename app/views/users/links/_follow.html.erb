@@ -1,0 +1,9 @@
+<%= link_to "Follow",
+relationships_path(other_user: other_user),
+data: {
+  turbo_method: "post",
+  turbo_action: "replace",
+  turbo_frame: "follow_link_#{other_user.id}",
+},
+id: "follow_link_#{other_user.id}",
+class: "button is-link is-fullwidth is-medium has-text-weight-semibold" %>
