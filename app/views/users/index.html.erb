@@ -1,0 +1,14 @@
+<div
+  class="
+    hero has-background-grey-lighter is-fullheight subtitleis-size-6-mobile
+    is-size-4
+  "
+>
+  <div class="container is-fluid pt-6">
+    <% @users.each do |user| %>
+      <section class="box has-background-light has-text-link">
+        <%= render partial: "users_list", locals: { user: user } %>
+      </section>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<% if current_user.active_relations&.find_by(followee_id: user.id)&.requested? %>
+  <%= render partial: "users/links/requested", locals: { other_user: user } %>
+<% else %>
+  <%= render partial: "users/links/follow", locals: { other_user: user } %>
+<% end %>
