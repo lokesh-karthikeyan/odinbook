@@ -15,6 +15,12 @@ Rails.application.routes.draw do
     match("sign_up", to: "devise/registrations#new", via: [ :get, :post ])
   end
 
+  resources(:users, only: [ :index, :show ]) do
+    resource(:profile, only: [ :show, :edit, :update ])
+  end
+
+  resources(:relationships, only: [ :create, :update ])
+
   resources(:posts)
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
