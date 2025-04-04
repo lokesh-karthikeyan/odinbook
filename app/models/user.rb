@@ -11,7 +11,7 @@ class User < ApplicationRecord
     omniauth_providers: %i[github]
   )
 
-  after_create :create_profile, :attach_avatar, :generate_random_name, :create_default_relations
+  after_create :create_profile, :attach_avatar, :generate_random_name
 
   has_many :active_relations, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following, through: :active_relations, source: :followee
@@ -20,6 +20,18 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relations, source: :follower
 
   has_one :profile, inverse_of: :user, dependent: :destroy
+
+  scope(
+    :not_connected_users,
+    ->(current_user) {
+      where
+        .not(id: current_user.id)
+        .where
+        .not(id: current_user.following.pluck(:id))
+        .or(where(id: current_user.active_relations.not_connected.pluck(:followee_id)))
+        .or(where(id: current_user.active_relations.requested.pluck(:followee_id)))
+    }
+  )
 
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
@@ -54,12 +66,5 @@ class User < ApplicationRecord
     temp_file.write(svg_content)
     temp_file.rewind
     profile.avatar.attach(io: temp_file, filename: "avatar.svg", content_type: "image/svg+xml")
-  end
-
-  def create_default_relations
-    User.where.not(id: self.id).find_each do |other_user|
-      Relationship.create(follower: self, followee: other_user)
-      Relationship.create(follower: other_user, followee: self)
-    end
   end
 end
