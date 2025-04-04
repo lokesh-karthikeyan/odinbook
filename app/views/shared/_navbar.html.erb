@@ -1,0 +1,79 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand is-centered">
+    <%= link_to "OdinBook",
+    posts_path,
+    class: "navbar-item is-size-5-mobile is-size-3 has-text-weight-semibold" %>
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="navbarBasicExample"
+      data-controller="toggler"
+      data-toggler-toggle-class="is-active"
+      data-action="click->toggler#toggle"
+      >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <%= link_to users_path, class: "navbar-item" do %>
+        Follow
+        <strong>+</strong>
+      <% end %>
+      <a class="navbar-item">
+        Profile
+      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Activity
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item is-selected">
+            Posts
+          </a>
+          <a class="navbar-item">
+            Likes
+          </a>
+          <a class="navbar-item">
+            Comments
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-warning is-rounded">
+            <svg
+              style="height: 24px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                <path
+                  d="M8.35179 20.2418C9.19288 21.311 10.5142 22 12 22C13.4858 22 14.8071 21.311 15.6482 20.2418C13.2264 20.57 10.7736 20.57 8.35179 20.2418Z"
+                  fill="#000"
+                ></path>
+                <path
+                  d="M18.7491 9V9.7041C18.7491 10.5491 18.9903 11.3752 19.4422 12.0782L20.5496 13.8012C21.5612 15.3749 20.789 17.5139 19.0296 18.0116C14.4273 19.3134 9.57274 19.3134 4.97036 18.0116C3.21105 17.5139 2.43882 15.3749 3.45036 13.8012L4.5578 12.0782C5.00972 11.3752 5.25087 10.5491 5.25087 9.7041V9C5.25087 5.13401 8.27256 2 12 2C15.7274 2 18.7491 5.13401 18.7491 9Z"
+                  fill="#000"
+                ></path>
+              </g></svg>
+          </a>
+          <%= link_to "Sign out",
+          destroy_user_session_path,
+          data: {
+            turbo_method: :delete,
+            turbo_confirm: "Continue to logout?",
+          },
+          class: "button is-primary has-text-weight-bold" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
