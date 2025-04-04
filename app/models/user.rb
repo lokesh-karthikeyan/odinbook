@@ -11,7 +11,7 @@ class User < ApplicationRecord
     omniauth_providers: %i[github]
   )
 
-  after_create :create_profile, :attach_avatar
+  after_create :create_profile, :attach_avatar, :generate_random_name
 
   has_many :active_relations, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following, through: :active_relations, source: :followee
@@ -28,6 +28,7 @@ class User < ApplicationRecord
       user.profile.name = auth.info.name
       user.profile.bio = auth.info.bio
       user.create_profile
+      user.generate_random_name
     end
   end
 
@@ -43,6 +44,8 @@ class User < ApplicationRecord
       break unique_username unless Profile.exists?(username: unique_username)
     end
   end
+
+  def generate_random_name = (profile.update(name: NameGenerator.generate) unless self&.profile&.name&.present?)
 
   def attach_avatar
     initials = base_username.first.upcase
