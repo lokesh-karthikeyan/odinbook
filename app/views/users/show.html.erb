@@ -1,0 +1,47 @@
+<div
+  class="
+    hero has-background-white is-medium subtitleis-size-6-mobile is-size-4
+  "
+>
+  <div class="box m-3 py-6 has-background-primary-90">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-196x196">
+          <%= show_blob(@user&.profile.avatar, resize_to: "100x100") %>
+        </figure>
+      </div>
+      <div class="media-content ml-3">
+        <div class="content">
+          <p class="title is-size-3-desktop has-text-black has-text-weight-bold">
+            <strong><%= @user&.profile.name %></strong>
+          </p>
+        </div>
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <%= render partial: "users/links/requested", locals: { other_user: @user } %>
+          </div>
+        </nav>
+      </div>
+    </article>
+    <div class="columns card px-2 py-4 has-background-grey-lighter">
+      <div class="column box has-background-white-ter p-4 mx-3 my-4">
+        <h4
+          class="
+            has-text-centered has-text-left-mobile has-text-weight-bold is-family-monospace
+            has-text-link is-size-5
+          "
+        ><%= @user.passive_relations.accepted.count %>
+          Following</h4>
+      </div>
+      <div class="column box has-background-white-ter p-4 mx-3 my-4">
+        <h4
+          class="
+            has-text-centered has-text-left-mobile has-text-weight-bold is-family-monospace
+            has-text-link is-size-5
+          "
+        ><%= @user.active_relations.accepted.count %>
+          Followers</h4>
+      </div>
+    </div>
+  </div>
+</div>
