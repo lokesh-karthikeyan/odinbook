@@ -11,7 +11,7 @@ class User < ApplicationRecord
     omniauth_providers: %i[github]
   )
 
-  after_create :create_profile, :attach_avatar, :generate_random_name
+  after_create :create_profile, :attach_avatar, :generate_random_name, :create_default_relations
 
   has_many :active_relations, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following, through: :active_relations, source: :followee
@@ -54,5 +54,12 @@ class User < ApplicationRecord
     temp_file.write(svg_content)
     temp_file.rewind
     profile.avatar.attach(io: temp_file, filename: "avatar.svg", content_type: "image/svg+xml")
+  end
+
+  def create_default_relations
+    User.where.not(id: self.id).find_each do |other_user|
+      Relationship.create(follower: self, followee: other_user)
+      Relationship.create(follower: other_user, followee: self)
+    end
   end
 end
