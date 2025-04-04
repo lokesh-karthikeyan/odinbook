@@ -2,11 +2,12 @@ class AvatarGenerator
   def self.create_initials_avatar(initials)
     svg = <<~SVG
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+        <title id="title">Avatar</title>
+        <desc id="desc">An avatar with the initials #{initials} displayed on a colored background</desc>
         <style>
           @font-face {
           font-family: "OpenSans";
           font-weight: 500;
-          src: url(data:application/x-font-ttf;base64,<%= ::AvatarsController::ENCODED_FONT %>);
           }
         </style>
         <rect width="100%" height="100%" fill="#{random_color}"/>
