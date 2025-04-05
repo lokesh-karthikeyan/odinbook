@@ -31,7 +31,13 @@ module ApplicationHelper
 
   def render_non_svg(blob, resize_to)
     if resize_to && blob.content_type.match(/^image\/(jpeg|jpg|png)$/)
-      image_tag(blob.variant(resize_to: resize_to).processed, alt: "Avatar")
+      dimensions = resize_to.downcase.split("x").map(&:to_i)
+      image_tag(
+        blob.variant(resize_to_fill: dimensions).processed,
+        alt: "Avatar",
+        width: dimensions[0],
+        height: dimensions[1]
+      )
     else
       image_tag(url_for(blob), alt: "Avatar")
     end
