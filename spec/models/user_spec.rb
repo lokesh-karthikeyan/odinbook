@@ -7,6 +7,13 @@ RSpec.describe User, type: :model do
   it { is_expected.to(have_many(:passive_relations).with_foreign_key("followee_id").class_name("Relationship")) }
   it { is_expected.to(have_many(:followers).through(:passive_relations).source(:follower)) }
 
+  it { is_expected.to(have_many(:posts)) }
+
+  it { is_expected.to(have_many(:comments)) }
+
+  it { is_expected.to(have_many(:likes)) }
+  it { is_expected.to(have_many(:liked_posts).through(:likes).source(:post)) }
+
   it { is_expected.to(have_one(:profile)) }
 
   context("When the user is registering") do
