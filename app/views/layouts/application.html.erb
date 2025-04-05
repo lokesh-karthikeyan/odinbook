@@ -21,6 +21,7 @@
     <% if user_signed_in? %>
       <%= render partial: "shared/navbar" %>
     <% end %>
+    <%= render partial: "shared/notifications" %>
     <%= yield %>
   </body>
 </html>
