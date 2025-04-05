@@ -1,0 +1,14 @@
+<% flash.each do |type, message| %>
+  <% bulma_class = "is-light" %>
+  <% if type.to_sym == :notice %>
+    <% bulma_class = "is-primary" %>
+  <% elsif type.to_sym == :alert %>
+    <% bulma_class = "is-warning" %>
+  <% elsif type.to_sym == :error %>
+    <% bulma_class = "is-danger" %>
+  <% end %>
+  <div class="flash notification <%= bulma_class %>" data-controller="flash">
+    <button class="delete" data-action="click->flash#dismiss"></button>
+    <%= message %>
+  </div>
+<% end %>
