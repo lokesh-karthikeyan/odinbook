@@ -1,7 +1,7 @@
 class AvatarGenerator
   def self.create_initials_avatar(initials)
     svg = <<~SVG
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 50 50" preserveAspectRatio="xMidYMid meet">
         <title id="title">Avatar</title>
         <desc id="desc">An avatar with the initials #{initials} displayed on a colored background</desc>
         <style>
