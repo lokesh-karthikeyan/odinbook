@@ -1,0 +1,28 @@
+<div class="column">
+  <%= link_to "#{post.likes.count} Likes",
+  "#",
+  class:
+    "button #{"is-success" if post.likes.exists?(user: current_user)} is-info is-fullwidth has-text-weight-semibold",
+  data: {
+    action: "click->like#toggleLike",
+    like_target: "button",
+    url:
+      (
+        if post.likes.exists?(user: current_user)
+          unlike_post_path(post)
+        else
+          like_post_path(post)
+        end
+      ),
+    liked: post.likes.exists?(user: current_user).to_s,
+  } %>
+</div>
+<div class="column">
+  <%= link_to "Comment",
+  new_post_comment_path(post_id: post.id),
+  class: "button is-info is-fullwidth has-text-weight-semibold",
+  data: {
+    turbo_stream: true,
+    turbo_frame: "#{dom_id(Comment.new)}_for_#{post.id}",
+  } %>
+</div>

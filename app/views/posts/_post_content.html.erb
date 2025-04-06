@@ -1,0 +1,12 @@
+<% if post.content.present? %>
+  <p class="is-size-6 is-family-sans-seriff has-text-black-bis px-3 pb-3">
+    <%= post.content %>
+  </p>
+<% end %>
+<% if post.media.attached? %>
+  <div class="box has-background-light">
+    <div class="image is-16by9">
+      <%= image_tag url_for(post.media), alt: post.media.filename.to_s %>
+    </div>
+  </div>
+<% end %>
