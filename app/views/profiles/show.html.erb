@@ -1,63 +1,25 @@
-<turbo-frame id="profile-section">
-  <div class="card m-4 has-background-grey-lighter">
-    <div class="card-image is-justify-content-center p-4">
-      <figure class="image is-16by9 is-flex is-justify-content-center">
-        <%= show_blob(current_user.profile.avatar, resize_to: "400x400") %>
-      </figure>
-    </div>
-    <div class="card-content">
-      <div class="media-content">
-        <div class="box has-background-light">
-          <div class="box has-background-grey-lighter">
-            <div class="column label is-size-4 has-text-black-bis">Name</div>
-            <div
-                class="
-                       input has-text-white is-size-5 has-text-weight-semibold has-background-grey
-                       "
-                ><%= current_user.profile.name %></div>
-          </div>
-          <div class="box has-background-grey-lighter">
-            <div class="column label is-size-4 has-text-black-bis">Username</div>
-            <div
-                class="
-                       input has-text-white is-size-5 has-text-weight-semibold has-background-grey
-                       "
-                ><%= current_user.profile.username %></div>
-          </div>
-          <div class="box has-background-grey-lighter">
-            <div class="column label is-size-4 has-text-black-bis">Email</div>
-            <div
-              class="
-                   input has-text-white is-size-5 has-text-weight-semibold has-background-grey
-                   "
-              ><%= current_user.email %></div>
-          </div>
-          <div class="box has-background-grey-lighter">
-            <div class="column label is-size-4 has-text-black-bis">Bio</div>
-            <div
-                class="
-                       box has-text-white is-size-5 has-text-weight-semibold has-background-grey
-                       "
-                >
-              <% if current_user.profile.bio.blank? %>
-                <p>Tell about yourself....</p>
-              <% else %>
-                <%= current_user.profile.bio %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+<div class="container fullheight">
+  <%= render partial: "profile", locals: { user: current_user } %>
+  <nav class="level">
+    <div class="level-item has-text-centered">
+      <div>
+        <%= link_to user_profile_posts_path(current_user) do %>
+          <p class="heading">Posts</p>
+          <p class="title">3,456</p>
+        <% end %>
       </div>
     </div>
-    <footer class="card-footer">
-      <%= link_to "Edit Profile",
-      edit_user_profile_path(current_user),
-      class: "card-footer-item",
-      data: {
-        turbo_frame: "profile-section",
-      }
-    %>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Following</p>
+        <p class="title">123</p>
+      </div>
     </div>
-  </footer>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Followers</p>
+        <p class="title">456K</p>
+      </div>
+    </div>
+  </nav>
 </div>
-</turbo-frame>
