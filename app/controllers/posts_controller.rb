@@ -28,7 +28,7 @@ class PostsController < ApplicationController
 
     if @post.save
       respond_to do |format|
-        format.html { redirect_to(homepage_path, notice: "Post was successfully created") }
+        format.html { redirect_to(authenticated_homepage_path, notice: "Post was successfully created") }
         format.turbo_stream
       end
 
@@ -38,7 +38,18 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    post = Post.find(params[:id])
+
+    if post.destroy
+      flash[:notice] = "Post was successfully deleted"
+      render(turbo_stream: turbo_stream.remove(post))
+    else
+      redirect_to(authenticated_homepage_path, alert: "Failed to delete the post.")
+    end
+  end
+
   private
 
-  def post_params = (params.expect(post: [ :content, :media ]))
+  def post_params = (params.expect(post: [ :content, :media, :id ]))
 end
