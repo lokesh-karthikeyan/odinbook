@@ -1,0 +1,50 @@
+<%= turbo_frame_tag(dom_id(Post.new)) do %>
+  <div class="box has-background-light m-2">
+    <%= form_with model: post, url: posts_path, method: :post, remote: true,
+        data: {
+          turbo_frame: dom_id(Post.new),
+        }  do |form| %>
+      <div class="field">
+        <div class="control">
+          <%= form.text_area :content,
+                         rows: 3,
+                         cols: 15,
+                         class:
+                           "textarea is-success has-text-black is-size-5 has-background-white-ter",
+                         placeholder: "What's on your mind?" %>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <div
+            class="
+              file is-dark is-fullwidth has-name is-flex is-justify-content-center p-4
+            "
+            data-controller="file-upload"
+          >
+            <label class="file-label">
+              <%= form.file_field :media,
+                              accept: "image/png, image/jpeg, image/svg+xml",
+                              data: {
+                                action: "change->file-upload#updateFileName",
+                              },
+                              class: "file-input" %>
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">Add Photos</span>
+              </span>
+              <span class="file-name has-text-black-bis" data-file-upload-target="fileName">
+                Share your thoughts
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="column is-align-content-center is-justify-content-center">
+          <%= form.submit "Create Post", class: "button is-success is-fullwidth" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
