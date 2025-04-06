@@ -31,8 +31,6 @@ class PostsController < ApplicationController
         format.html { redirect_to(authenticated_homepage_path, notice: "Post was successfully created") }
         format.turbo_stream
       end
-
-      render
     else
       render(:new, status: :unprocessable_entity)
     end
