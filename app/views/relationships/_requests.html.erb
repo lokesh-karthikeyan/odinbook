@@ -1,0 +1,27 @@
+<%= turbo_frame_tag("new_request_#{user.id}") do %>
+  <div
+    class="
+      box is-flex is-fullwidth is-flex-direction-column has-background-light columns
+      m-5
+    "
+  >
+    <div class="column is-flex is-justify-content-center">
+      <%= show_blob(user.profile.avatar, resize_to: "250x250") %>
+    </div>
+    <div class="container">
+      <h2
+        class="
+          has-text-link subtitle is-4 has-text-weight-semibold has-text-centered m-2
+        "
+      ><%= user.profile.name %></h2>
+    </div>
+    <div
+      class="column is-flex is-justify-content-space-between"
+      style="gap: 1rem;"
+      data-controller="remove-button"
+    >
+      <%= render partial: "users/links/accept", locals: { user: user } %>
+      <%= render partial: "users/links/reject", locals: { user: user } %>
+    </div>
+  </div>
+<% end %>

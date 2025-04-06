@@ -1,0 +1,15 @@
+<div class="container is-fullheight has-background-white">
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <% if @users.blank? %>
+        <div class="box has-background-light m-5">
+          <h2 class="title has-text-weight-bold is-3 has-text-centered has-text-link">
+            No Pending Requests
+          </h2>
+        </div>
+      <% else %>
+        <%= render partial: "requests", collection: @users, as: :user %>
+      <% end %>
+    </div>
+  </div>
+</div>
