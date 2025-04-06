@@ -13,11 +13,41 @@ class User < ApplicationRecord
 
   after_create :create_profile, :attach_avatar, :generate_random_name
 
-  has_many :active_relations, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many(
+    :active_relations,
+    -> { where(status: :accepted) },
+    class_name: "Relationship",
+    foreign_key: "follower_id",
+    dependent: :destroy
+  )
   has_many :following, through: :active_relations, source: :followee
 
-  has_many :passive_relations, class_name: "Relationship", foreign_key: "followee_id", dependent: :destroy
+  has_many(
+    :passive_relations,
+    -> { where(status: :accepted) },
+    class_name: "Relationship",
+    foreign_key: "followee_id",
+    dependent: :destroy
+  )
   has_many :followers, through: :passive_relations, source: :follower
+
+  has_many(
+    :requested_active_relations,
+    -> { where(status: :requested) },
+    class_name: "Relationship",
+    foreign_key: "follower_id",
+    dependent: :destroy
+  )
+  has_many :requests, through: :requested_active_relations, source: :followee
+
+  has_many(
+    :requested_passive_relations,
+    -> { where(status: :requested) },
+    class_name: "Relationship",
+    foreign_key: "followee_id",
+    dependent: :destroy
+  )
+  has_many :pending_requests, through: :requested_passive_relations, source: :follower
 
   has_many :posts, dependent: :destroy
 
