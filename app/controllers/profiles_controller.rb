@@ -15,10 +15,10 @@ class ProfilesController < ApplicationController
           bio: profile_params[:bio],
           avatar: profile_params[:avatar]
         )
-      flash[:message] = "Profile updated successfully!"
+      flash[:notice] = "Profile updated successfully!"
       redirect_to(user_profile_path(current_user))
     else
-      flash.now[:alert] = "An Error occured!"
+      flash.now[:error] = "An Error occured!"
       render(:edit, status: :unprocessable_entity)
     end
   end
