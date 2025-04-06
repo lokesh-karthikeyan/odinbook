@@ -1,0 +1,10 @@
+<%= link_to "Accept",
+relationship_path(other_user: user, status: "accepted"),
+data: {
+  turbo_method: "patch",
+  turbo_action: "replace",
+  turbo_frame: "accept_link_#{user.id}",
+},
+id: "accept_link_#{user.id}",
+class:
+  "accept button is-success is-fullwidth is-medium has-text-weight-semibold" %>

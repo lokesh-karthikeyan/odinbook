@@ -1,0 +1,9 @@
+<%= link_to "Reject",
+relationship_path(other_user: user, status: "rejected"),
+data: {
+  turbo_method: :patch,
+  turbo_action: "replace",
+  turbo_frame: "reject_link_#{user.id}",
+},
+id: "reject_link_#{user.id}",
+class: "reject button is-danger is-fullwidth is-medium has-text-weight-semibold" %>
