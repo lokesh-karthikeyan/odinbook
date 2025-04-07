@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "#{dom_id(Comment.new)}_for_#{@post.id}",
+                     partial: "form",
+                     locals: {
+                       comment: @comment,
+                       post: @post,
+                     } %>

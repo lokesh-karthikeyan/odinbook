@@ -1,0 +1,7 @@
+<% if post.comments.present? %>
+  <%= render partial: "comments/comments",
+  collection: post.comments.order(created_at: :desc),
+  as: :comment %>
+<% else %>
+  <h3 class="subtitle is-6 has-text-weight-bold has-text-centered pb-4">No comments yet!</h3>
+<% end %>

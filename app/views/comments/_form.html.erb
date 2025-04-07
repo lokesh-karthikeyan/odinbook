@@ -1,0 +1,18 @@
+<%= turbo_frame_tag("#{dom_id(Comment.new)}_for_#{post.id}") do %>
+  <div class="box has-background-light m-2">
+    <%= form_with model: comment, url: post_comments_path, method: :post, remote: true do |form| %>
+      <div class="media-content">
+        <div class="field">
+          <p class="control has-text-black">
+            <%= form.text_area :content,
+                           placeholder: "Add your comment..",
+                           class: "textarea has-background-white-ter has-text-black-bis" %>
+          </p>
+        </div>
+        <div class="buttons is-right">
+          <%= form.submit "Submit", class: "button is-info is-right has-text-weight-bold" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

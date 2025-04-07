@@ -1,0 +1,6 @@
+<%= turbo_stream.update "#{dom_id(Comment.new)}_for_#{@post.id}", "" %>
+<%= turbo_stream.prepend "comments_feed_#{@post.id}",
+                     partial: "comments/comments",
+                     locals: {
+                       comment: @comment,
+                     } %>

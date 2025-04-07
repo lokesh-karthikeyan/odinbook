@@ -1,0 +1,26 @@
+<div class="container" id="<%= dom_id(comment.post) %>">
+  <div class="card has-background-light my-3">
+    <hr class="has-background-grey m-4">
+    <div class="media pt-3">
+      <div class="media-left p-2">
+        <figure class="image is-48x48">
+          <%= show_blob(comment.user.profile.avatar, resize_to: "48x48") %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <p>
+          <strong class="subtitle has-text-link is-7"><%= comment.user.profile.name %></strong>
+        </p>
+        <p>
+          <small class="is-size-7">Commented
+            <%= "#{time_ago_in_words(comment.created_at)} ago" %></small>
+        </p>
+      </div>
+    </div>
+    <div>
+      <p class="is-size-6 is-family-sans-seriff has-text-black-bis px-3 pb-3">
+        <%= comment.content %>
+      </p>
+    </div>
+  </div>
+</div>
