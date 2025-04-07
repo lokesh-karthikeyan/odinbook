@@ -1,0 +1,11 @@
+<div class="container is-fullheight has-background-white">
+  <div class="box m-2 has-background-white">
+    <% if @liked_posts.present? %>
+      <%= render partial: "shared/post", collection: @liked_posts, as: :post %>
+    <% else %>
+      <div class="box has-background-light m-5">
+        <h2 class="title is-4 has-text-weight-bold has-text-link has-text-centered">You haven't liked any posts yet!</h2>
+      </div>
+    <% end %>
+  </div>
+</div>
