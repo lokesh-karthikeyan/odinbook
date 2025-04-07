@@ -1,0 +1,9 @@
+<%= turbo_stream.update "user_followers", "" %>
+<%= turbo_stream.update "user_posts", "" %>
+<%= turbo_stream.append "user_following" do %>
+  <div class="cotainer">
+    <div class="box m-2 has-background-white">
+      <%= render partial: "profile", collection: @following, as: :user %>
+    </div>
+  </div>
+<% end %>

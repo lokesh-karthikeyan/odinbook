@@ -1,0 +1,18 @@
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <%= show_blob(user.profile.avatar, resize_to: "64x64") %>
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <p class="has-text-link has-text-weight-bold">
+        <%= user.profile.name %>
+        <br>
+        <small>
+          @<%= user.profile.username %>
+        </small>
+      </p>
+    </div>
+  </div>
+</article>
