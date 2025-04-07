@@ -1,0 +1,31 @@
+<div class="container is-fullheight has-background-white">
+  <div
+    class="
+      box m-2 is-flex is-justify-content-space-between has-background-grey-light
+    "
+  >
+    <div class="container is-flex is-gap-2">
+      <%= show_blob(current_user.profile.avatar, resize_to: "100x100") %>
+      <h3 class="title is-4 has-text-black is-size-4-mobile"><%= current_user.profile.name %></h3>
+    </div>
+    <div class="container is-flex is-justify-content-end p-4">
+      <%= link_to "New Post",
+      new_post_path(format: :turbo_stream),
+      class: "button is-primary is-large ",
+      remote: true,
+      data: {
+        turbo_frame: dom_id(Post.new),
+        turbo_stream: "",
+      } %>
+    </div>
+  </div>
+  <%= turbo_frame_tag(dom_id(Post.new)) do %>
+  <% end %>
+  <div class="cotainer">
+    <div class="box m-2 has-background-white">
+      <%= turbo_frame_tag("posts_feed") do %>
+        <%= render partial: "shared/post", collection: @posts, as: :post %>
+      <% end %>
+    </div>
+  </div>
+</div>
