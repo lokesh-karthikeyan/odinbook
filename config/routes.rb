@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       get(:following, to: "users#following")
       get(:followers, to: "users#followers")
       get(:posts, to: "users#posts")
+      get(:liked_posts, to: "users#liked_posts")
+      get(:commented_posts, to: "users#commented_posts")
+      delete(:unfollow, to: "relationships#destroy")
     end
   end
 
