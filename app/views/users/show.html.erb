@@ -12,33 +12,36 @@
       </div>
     </div>
   </div>
-  <div class="tabs is-centered is-boxed">
+  <div class="tabs is-centered is-boxed" data-controller="toggler">
     <ul>
-      <li class="is-active">
+      <li class="is-active menu-tabs">
         <%= link_to "Posts",
         posts_user_path(@user),
         method: :get,
         remote: true,
         data: {
           turbo_stream: true,
+          action: "click->toggler#changeClass",
         } %>
       </li>
-      <li>
+      <li class="menu-tabs">
         <%= link_to "Following",
         following_user_path(@user),
         method: :get,
         remote: true,
         data: {
           turbo_stream: true,
+          action: "click->toggler#changeClass",
         } %>
       </li>
-      <li class=:>
+      <li class="menu-tabs">
         <%= link_to "Followers",
         followers_user_path(@user),
         method: :get,
         remote: true,
         data: {
           turbo_stream: true,
+          action: "click->toggler#changeClass",
         } %>
       </li>
     </ul>
@@ -46,7 +49,11 @@
   <%= turbo_frame_tag("user_posts") do %>
     <div class="cotainer">
       <div class="box m-2 has-background-white">
-        <%= render partial: "shared/post", collection: @posts, as: :post %>
+        <% if @posts.present? %>
+          <%= render partial: "shared/post", collection: @posts, as: :post %>
+        <% else %>
+          <h2 class="title is-4 has-text-weight-bold has-text-link has-text-centered">No posts yet!</h2>
+        <% end %>
       </div>
     </div>
   <% end %>

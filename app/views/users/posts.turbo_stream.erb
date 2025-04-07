@@ -4,7 +4,11 @@
 <%= turbo_stream.append "user_posts" do %>
   <div class="cotainer">
     <div class="box m-2 has-background-white">
-      <%= render partial: "shared/post", collection: @posts, as: :post %>
+      <% if @posts.present? %>
+        <%= render partial: "shared/post", collection: @posts, as: :post %>
+      <% else %>
+        <h2 class="title is-4 has-text-weight-bold has-text-link has-text-centered">No posts yet!</h2>
+      <% end %>
     </div>
   </div>
 <% end %>

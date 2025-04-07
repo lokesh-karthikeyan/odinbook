@@ -6,13 +6,15 @@
   </figure>
   <div class="media-content">
     <div class="content">
-      <p class="has-text-link has-text-weight-bold">
-        <%= user.profile.name %>
-        <br>
-        <small>
-          @<%= user.profile.username %>
-        </small>
-      </p>
+      <%= link_to user_path(user), data: { turbo: false } do %>
+        <p class="has-text-link has-text-weight-bold">
+          <%= user.profile.name %>
+          <br>
+          <small>
+            @<%= user.profile.username %>
+          </small>
+        </p>
+      <% end %>
     </div>
   </div>
 </article>

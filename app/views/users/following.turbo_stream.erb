@@ -3,7 +3,11 @@
 <%= turbo_stream.append "user_following" do %>
   <div class="cotainer">
     <div class="box m-2 has-background-white">
-      <%= render partial: "profile", collection: @following, as: :user %>
+      <% if @following.present? %>
+        <%= render partial: "profile", collection: @following, as: :user %>
+      <% else %>
+        <h2 class="title is-4 has-text-weight-bold has-text-link has-text-centered">Following 0 members</h2>
+      <% end %>
     </div>
   </div>
 <% end %>
