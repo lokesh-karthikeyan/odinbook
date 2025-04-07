@@ -6,4 +6,29 @@ class Relationship < ApplicationRecord
 
   scope :following, -> { where(status: "accepted") }
   scope :followers, -> { where(status: "accepted") }
+
+  scope(
+    :between_users,
+    ->(user1, user2) {
+      where(
+        "(follower_id = :user1_id AND followee_id = :user2_id) OR
+         (follower_id = :user2_id AND followee_id = :user1_id)",
+        user1_id: user1.id,
+        user2_id: user2.id
+      )
+    }
+  )
+
+  scope(
+    :rejected_between_users,
+    ->(user1, user2) {
+      where(
+        "(follower_id = :user1_id AND followee_id = :user2_id) OR
+       (follower_id = :user2_id AND followee_id = :user1_id)",
+        user1_id: user1.id,
+        user2_id: user2.id
+      )
+        .where(status: :rejected)
+    }
+  )
 end
