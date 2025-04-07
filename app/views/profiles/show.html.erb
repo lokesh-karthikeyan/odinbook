@@ -1,25 +1,50 @@
-<div class="container fullheight">
+<div class="container fullheight has-background-white">
   <%= render partial: "profile", locals: { user: current_user } %>
-  <nav class="level">
-    <div class="level-item has-text-centered">
-      <div>
-        <%= link_to user_profile_posts_path(current_user) do %>
-          <p class="heading">Posts</p>
-          <p class="title">3,456</p>
+  <div class="tabs is-centered is-boxed" data-controller="toggler">
+    <ul>
+      <li class="is-active menu-tabs">
+        <%= link_to "Posts",
+        posts_user_path(@user),
+        method: :get,
+        remote: true,
+        data: {
+          turbo_stream: true,
+          action: "click->toggler#changeClass",
+        } %>
+      </li>
+      <li class="menu-tabs">
+        <%= link_to "Following",
+        following_user_path(@user),
+        method: :get,
+        remote: true,
+        data: {
+          turbo_stream: true,
+          action: "click->toggler#changeClass",
+        } %>
+      </li>
+      <li class="menu-tabs">
+        <%= link_to "Followers",
+        followers_user_path(@user),
+        method: :get,
+        remote: true,
+        data: {
+          turbo_stream: true,
+          action: "click->toggler#changeClass",
+        } %>
+      </li>
+    </ul>
+  </div>
+  <%= turbo_frame_tag("user_posts") do %>
+    <div class="cotainer">
+      <div class="box m-2 has-background-white">
+        <% if @posts.present? %>
+          <%= render partial: "shared/post", collection: @posts, as: :post %>
+        <% else %>
+          <h2 class="title is-4 has-text-weight-bold has-text-link has-text-centered">No posts yet!</h2>
         <% end %>
       </div>
     </div>
-    <div class="level-item has-text-centered">
-      <div>
-        <p class="heading">Following</p>
-        <p class="title">123</p>
-      </div>
-    </div>
-    <div class="level-item has-text-centered">
-      <div>
-        <p class="heading">Followers</p>
-        <p class="title">456K</p>
-      </div>
-    </div>
-  </nav>
+  <% end %>
+  <%= turbo_frame_tag("user_following") %>
+  <%= turbo_frame_tag("user_followers") %>
 </div>
