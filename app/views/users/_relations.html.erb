@@ -2,6 +2,19 @@
   <%= render partial: "users/links/unfollow", locals: { other_user: user } %>
 <% elsif current_user.requests.include?(user) %>
   <%= render partial: "users/links/requested", locals: { other_user: user } %>
+<% elsif current_user.pending_requests.include?(user) %>
+  <%= render partial: "users/links/accept",
+  locals: {
+    user: user,
+    context: "user_profile_page",
+  } %>
+  <%= render partial: "users/links/reject",
+  locals: {
+    user: user,
+    context: "user_profile_page",
+  } %>
+<% elsif current_user.rejected_with?(user) %>
+  <%= render partial: "users/links/rejected", locals: { user: user } %>
 <% else %>
   <%= render partial: "users/links/follow", locals: { other_user: user } %>
 <% end %>

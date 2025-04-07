@@ -8,6 +8,11 @@
           </figure>
           <h1 class="title is-4 has-text-link my-4"><strong><%= @user.profile.name %></strong></h1>
           <p class="subtitle is-6 has-text-link">@<%= @user.profile.username %></p>
+          <div class="container">
+            <%= turbo_frame_tag("relations_status", class: "is-flex is-gap-2") do %>
+              <%= render partial: "relations", locals: { user: @user } %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
