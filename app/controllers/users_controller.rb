@@ -36,4 +36,15 @@ class UsersController < ApplicationController
       format.turbo_stream
     end
   end
+
+  def liked_posts
+    @user = User.find(params[:id])
+    @liked_posts = @user.liked_posts.order(created_at: :desc)
+  end
+
+  def commented_posts
+    Rails.logger.debug("xxxx#{params}")
+    @user = User.find(params[:id])
+    @commented_posts = @user.commented_posts.order(updated_at: :desc)
+  end
 end
