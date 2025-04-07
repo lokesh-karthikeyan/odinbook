@@ -1,5 +1,5 @@
 <%= link_to "Accept",
-relationship_path(other_user: user, status: "accepted"),
+relationship_path(other_user: user, status: "accepted", context: context),
 data: {
   turbo_method: "patch",
   turbo_action: "replace",

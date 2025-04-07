@@ -1,5 +1,5 @@
 <%= link_to "Reject",
-relationship_path(other_user: user, status: "rejected"),
+relationship_path(other_user: user, status: "rejected", context: context),
 data: {
   turbo_method: :patch,
   turbo_action: "replace",

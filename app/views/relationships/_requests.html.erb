@@ -20,8 +20,16 @@
       style="gap: 1rem;"
       data-controller="remove-button"
     >
-      <%= render partial: "users/links/accept", locals: { user: user } %>
-      <%= render partial: "users/links/reject", locals: { user: user } %>
+      <%= render partial: "users/links/accept",
+      locals: {
+        user: user,
+        context: "relationship_page",
+      } %>
+      <%= render partial: "users/links/reject",
+      locals: {
+        user: user,
+        context: "relationship_page",
+      } %>
     </div>
   </div>
 <% end %>
