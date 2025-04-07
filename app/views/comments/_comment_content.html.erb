@@ -3,5 +3,6 @@
   collection: post.comments.order(created_at: :desc),
   as: :comment %>
 <% else %>
+  <hr class="has-background-grey m-4">
   <h3 class="subtitle is-6 has-text-weight-bold has-text-centered pb-4">No comments yet!</h3>
 <% end %>
