@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @posts = @user.posts
+
+    @relationship = Relationship.between_users(current_user, @user).first
   end
 
   def posts
