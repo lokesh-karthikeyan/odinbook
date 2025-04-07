@@ -1,47 +1,55 @@
-<div
-  class="
-    hero has-background-white is-medium subtitleis-size-6-mobile is-size-4
-  "
->
-  <div class="box m-3 py-6 has-background-primary-90">
-    <article class="media">
-      <div class="media-left">
-        <figure class="image is-196x196">
-          <%= show_blob(@user&.profile.avatar, resize_to: "100x100") %>
-        </figure>
-      </div>
-      <div class="media-content ml-3">
-        <div class="content">
-          <p class="title is-size-3-desktop has-text-black has-text-weight-bold">
-            <strong><%= @user&.profile.name %></strong>
-          </p>
+<div class="container has-background-white is-fullheight">
+  <div class="section">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="box has-background-light has-text-centered">
+          <figure class="image is-128x128 m-auto">
+            <%= show_blob(@user.profile.avatar, resize_to: "128x128") %>
+          </figure>
+          <h1 class="title is-4 has-text-link my-4"><strong><%= @user.profile.name %></strong></h1>
+          <p class="subtitle is-6 has-text-link">@<%= @user.profile.username %></p>
         </div>
-        <nav class="level is-mobile">
-          <div class="level-left">
-            <%= render partial: "users/links/requested", locals: { other_user: @user } %>
-          </div>
-        </nav>
-      </div>
-    </article>
-    <div class="columns card px-2 py-4 has-background-grey-lighter">
-      <div class="column box has-background-white-ter p-4 mx-3 my-4">
-        <h4
-          class="
-            has-text-centered has-text-left-mobile has-text-weight-bold is-family-monospace
-            has-text-link is-size-5
-          "
-        ><%= @user.passive_relations.accepted.count %>
-          Following</h4>
-      </div>
-      <div class="column box has-background-white-ter p-4 mx-3 my-4">
-        <h4
-          class="
-            has-text-centered has-text-left-mobile has-text-weight-bold is-family-monospace
-            has-text-link is-size-5
-          "
-        ><%= @user.active_relations.accepted.count %>
-          Followers</h4>
       </div>
     </div>
   </div>
+  <div class="tabs is-centered is-boxed">
+    <ul>
+      <li class="is-active">
+        <%= link_to "Posts",
+        posts_user_path(@user),
+        method: :get,
+        remote: true,
+        data: {
+          turbo_stream: true,
+        } %>
+      </li>
+      <li>
+        <%= link_to "Following",
+        following_user_path(@user),
+        method: :get,
+        remote: true,
+        data: {
+          turbo_stream: true,
+        } %>
+      </li>
+      <li class=:>
+        <%= link_to "Followers",
+        followers_user_path(@user),
+        method: :get,
+        remote: true,
+        data: {
+          turbo_stream: true,
+        } %>
+      </li>
+    </ul>
+  </div>
+  <%= turbo_frame_tag("user_posts") do %>
+    <div class="cotainer">
+      <div class="box m-2 has-background-white">
+        <%= render partial: "shared/post", collection: @posts, as: :post %>
+      </div>
+    </div>
+  <% end %>
+  <%= turbo_frame_tag("user_following") %>
+  <%= turbo_frame_tag("user_followers") %>
 </div>
