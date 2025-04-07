@@ -1,11 +1,4 @@
 class PostsController < ApplicationController
-  def index
-    @posts = Post
-      .includes(user: :profile)
-      .where(user_id: post_params[:user_profile_id])
-      .order(created_at: :desc)
-  end
-
   def feed
     current_user_and_following_ids = [ current_user.id ] + current_user.following.pluck(:id)
     @posts = Post
