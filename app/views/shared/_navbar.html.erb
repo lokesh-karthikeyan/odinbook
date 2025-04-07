@@ -1,7 +1,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand is-centered">
     <%= link_to "OdinBook",
-    posts_path,
+    authenticated_homepage_path,
     class: "navbar-item is-size-5-mobile is-size-3 has-text-weight-semibold" %>
     <a
       role="button"
@@ -25,46 +25,53 @@
         Follow
         <strong>+</strong>
       <% end %>
-      <a class="navbar-item">
-        Profile
-      </a>
+      <%= link_to "Profile", user_profile_path(current_user), class: "navbar-item" %>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
           Activity
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item is-selected">
-            Posts
-          </a>
-          <a class="navbar-item">
-            Likes
-          </a>
-          <a class="navbar-item">
-            Comments
-          </a>
+          <%= link_to "Liked Posts", liked_posts_user_path(current_user), class: "navbar-item" %>
+          <%= link_to "Commented Posts",
+          commented_posts_user_path(current_user),
+          class: "navbar-item" %>
         </div>
       </div>
     </div>
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-warning is-rounded">
+          <%= link_to relationship_path(current_user), class: "button is-warning is-rounded" do %>
             <svg
               style="height: 24px"
               viewBox="0 0 24 24"
-              fill="none"
+              version="1.1"
               xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="#000000"
             ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-                <path
-                  d="M8.35179 20.2418C9.19288 21.311 10.5142 22 12 22C13.4858 22 14.8071 21.311 15.6482 20.2418C13.2264 20.57 10.7736 20.57 8.35179 20.2418Z"
-                  fill="#000"
-                ></path>
-                <path
-                  d="M18.7491 9V9.7041C18.7491 10.5491 18.9903 11.3752 19.4422 12.0782L20.5496 13.8012C21.5612 15.3749 20.789 17.5139 19.0296 18.0116C14.4273 19.3134 9.57274 19.3134 4.97036 18.0116C3.21105 17.5139 2.43882 15.3749 3.45036 13.8012L4.5578 12.0782C5.00972 11.3752 5.25087 10.5491 5.25087 9.7041V9C5.25087 5.13401 8.27256 2 12 2C15.7274 2 18.7491 5.13401 18.7491 9Z"
-                  fill="#000"
-                ></path>
-              </g></svg>
-          </a>
+                <title>profile_plus_round [#1324]</title>
+                <desc>Created with Sketch.</desc>
+                <defs>
+                </defs>
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g
+                    id="Dribbble-Light-Preview"
+                    transform="translate(-60.000000, -2239.000000)"
+                    fill="#000000"
+                  >
+                    <g id="icons" transform="translate(56.000000, 160.000000)">
+                      <path
+                        d="M24.0001371,2083 C24.0001371,2083.552 23.5521371,2084 23.0001371,2084 L21.0001371,2084 L21.0001371,2086 C21.0001371,2086.552 20.5521371,2087 20.0001371,2087 C19.4481371,2087 19.0001371,2086.552 19.0001371,2086 L19.0001371,2084 L17.0001371,2084 C16.4481371,2084 16.0001371,2083.552 16.0001371,2083 C16.0001371,2082.448 16.4481371,2082 17.0001371,2082 L19.0001371,2082 L19.0001371,2080 C19.0001371,2079.448 19.4481371,2079 20.0001371,2079 C20.5521371,2079 21.0001371,2079.448 21.0001371,2080 L21.0001371,2082 L23.0001371,2082 C23.5521371,2082 24.0001371,2082.448 24.0001371,2083 M15.7401371,2097 L7.6121371,2097 C6.8171371,2097 6.3141371,2096.099 6.7721371,2095.449 C7.8511371,2093.92 9.6251371,2092.916 11.6331371,2092.902 C11.6471371,2092.902 11.6611371,2092.906 11.6751371,2092.906 C11.6901371,2092.906 11.7031371,2092.902 11.7181371,2092.902 C13.7271371,2092.916 15.5021371,2093.919 16.5801371,2095.449 C17.0381371,2096.099 16.5361371,2097 15.7401371,2097 M11.6751371,2086.906 C12.7781371,2086.906 13.6751371,2087.803 13.6751371,2088.906 C13.6751371,2089.995 12.8001371,2090.879 11.7181371,2090.902 C11.7031371,2090.902 11.6901371,2090.9 11.6751371,2090.9 C11.6611371,2090.9 11.6471371,2090.902 11.6331371,2090.902 C10.5501371,2090.879 9.6751371,2089.995 9.6751371,2088.906 C9.6751371,2087.803 10.5731371,2086.906 11.6751371,2086.906 M14.7011371,2091.495 C15.5311371,2090.527 15.9311371,2089.18 15.5001371,2087.724 C15.1031371,2086.38 13.9731371,2085.319 12.6061371,2085.011 C9.9921371,2084.422 7.6751371,2086.393 7.6751371,2088.906 C7.6751371,2089.899 8.0501371,2090.796 8.6491371,2091.495 C6.5201371,2092.365 4.8481371,2094.181 4.1011371,2096.4 C3.6711371,2097.68 4.6691371,2099 6.0191371,2099 L17.3311371,2099 C18.6811371,2099 19.6801371,2097.68 19.2491371,2096.4 C18.5021371,2094.181 16.8311371,2092.365 14.7011371,2091.495"
+                        id="profile_plus_round-[#1324]"
+                      >
+                      </path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          <% end %>
           <%= link_to "Sign out",
           destroy_user_session_path,
           data: {
