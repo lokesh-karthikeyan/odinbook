@@ -61,14 +61,18 @@ class User < ApplicationRecord
   scope(
     :not_connected_users,
     ->(current_user) {
-      where
-        .not(id: current_user.id)
-        .where
-        .not(id: current_user.following.pluck(:id))
-        .or(where(id: current_user.active_relations.not_connected.pluck(:followee_id)))
-        .or(where(id: current_user.active_relations.requested.pluck(:followee_id)))
+      connected_user_ids = current_user.following.pluck(:id) + current_user.followers.pluck(:id)
+      sent_request_ids = current_user.requests.pluck(:id)
+      pending_request_ids = current_user.pending_requests.pluck(:id)
+      excluded_ids = connected_user_ids + pending_request_ids + [ current_user.id ]
+
+      where.not(id: excluded_ids).or(where(id: sent_request_ids))
     }
   )
+
+  def rejected_with?(other_user)
+    Relationship.rejected_between_users(self, other_user).exists?
+  end
 
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
