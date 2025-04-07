@@ -17,11 +17,17 @@ Rails.application.routes.draw do
 
   resources(:users, only: [ :index, :show ]) do
     resource(:profile, only: [ :show, :edit, :update ]) do
-      resources(:posts, only: [ :index, :create ])
+      resources(:posts, only: [ :create ])
+    end
+
+    member do
+      get(:following, to: "users#following")
+      get(:followers, to: "users#followers")
+      get(:posts, to: "users#posts")
     end
   end
 
-  resources(:posts, only: [ :index, :new, :create, :destroy ]) do
+  resources(:posts, only: [ :new, :create, :destroy ]) do
     member do
       post(:like, to: "likes#create")
       delete(:unlike, to: "likes#destroy")
