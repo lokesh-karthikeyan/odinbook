@@ -45,6 +45,6 @@ class UsersController < ApplicationController
   def commented_posts
     Rails.logger.debug("xxxx#{params}")
     @user = User.find(params[:id])
-    @commented_posts = @user.commented_posts.order(updated_at: :desc)
+    @commented_posts = @user.commented_posts.distinct.order(updated_at: :desc)
   end
 end
