@@ -5,14 +5,14 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts
+    @posts = @user.posts.order(created_at: :desc)
 
     @relationship = Relationship.between_users(current_user, @user).first
   end
 
   def posts
     @user = User.find(params[:id])
-    @posts = @user.posts
+    @posts = @user.posts.order(created_at: :desc)
 
     respond_to do |format|
       format.turbo_stream
@@ -43,7 +43,6 @@ class UsersController < ApplicationController
   end
 
   def commented_posts
-    Rails.logger.debug("xxxx#{params}")
     @user = User.find(params[:id])
     @commented_posts = @user.commented_posts.distinct.order(updated_at: :desc)
   end
