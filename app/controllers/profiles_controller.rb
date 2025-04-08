@@ -13,14 +13,13 @@ class ProfilesController < ApplicationController
     @user = current_user
     @profile = @user.profile
 
-    if current_user
-        .profile
-        .update(
-          name: profile_params[:name],
-          username: profile_params[:username],
-          bio: profile_params[:bio],
-          avatar: profile_params[:avatar]
-        )
+    if profile_params[:avatar].blank?
+      filtered_params = profile_params.except(:avatar)
+    else
+      filtered_params = profile_params
+    end
+
+    if @profile.update(filtered_params)
       flash[:notice] = "Profile updated successfully!"
       redirect_to(user_profile_path(current_user))
     else
