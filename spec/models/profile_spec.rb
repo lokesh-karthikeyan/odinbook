@@ -68,6 +68,13 @@ RSpec.describe Profile, type: :model do
       end
     end
 
+    context("When the avaatr is not attached") do
+      it "should be invalid" do
+        profile = build(:profile, avatar: nil)
+        expect(profile).not_to(be_valid)
+      end
+    end
+
     context("When the avatar attachment is valid type") do
       it "should be valid" do
         profile = build(:profile)
