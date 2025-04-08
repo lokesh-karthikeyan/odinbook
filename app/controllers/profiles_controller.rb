@@ -1,14 +1,18 @@
 class ProfilesController < ApplicationController
   def show
     @user = current_user
-    @posts = @user.posts
+    @posts = @user.posts.order(created_at: :desc)
   end
 
   def edit
-    @user = current_user
+    @user = User.find_by(id: params[:user_id]) || current_user
+    @profile = @user.profile
   end
 
   def update
+    @user = current_user
+    @profile = @user.profile
+
     if current_user
         .profile
         .update(
