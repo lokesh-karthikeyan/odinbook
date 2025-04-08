@@ -13,6 +13,9 @@ class User < ApplicationRecord
 
   after_create :create_profile, :attach_avatar, :generate_random_name
 
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :password, presence: true
+
   has_many(
     :active_relations,
     -> { where(status: :accepted) },
@@ -76,17 +79,23 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+    new_user = find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      user.profile.name = auth.info.name
-      user.profile.bio = auth.info.bio
-      user.create_profile
-      user.generate_random_name
     end
-  end
 
-  private
+    if new_user
+      new_user.build_profile(
+        name: auth.info.name || new_user.generate_random_name,
+        bio: auth.info.bio,
+        username: new_user.generate_unique_username
+      )
+      new_user.profile.save
+      new_user.attach_avatar
+    end
+
+    new_user
+  end
 
   def create_profile = (build_profile(username: generate_unique_username).save)
 
@@ -109,4 +118,10 @@ class User < ApplicationRecord
     temp_file.rewind
     profile.avatar.attach(io: temp_file, filename: "avatar.svg", content_type: "image/svg+xml")
   end
+
+  private
+
+  def create_profile = (build_profile(username: generate_unique_username).save)
+
+  def base_username = (email.split("@").first)
 end
