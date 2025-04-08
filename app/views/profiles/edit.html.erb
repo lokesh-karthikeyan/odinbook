@@ -5,7 +5,8 @@
         <%= show_blob(current_user.profile.avatar, resize_to: "400x400") %>
       </figure>
     </div>
-    <%= form_with model: @user.profile, url: user_profile_path(@user), method: :patch do |form| %>
+    <%= form_with model: @profile, url: user_profile_path(user_id: @user.id), method: :patch do |form| %>
+      <%= render partial: "shared/errors", locals: { object: @profile } %>
       <div class="file is-dark is-normal has-name is-flex is-justify-content-center p-4" data-controller="file-upload">
         <label class="file-label">
           <%= form.file_field :avatar, accept: "image/png, image/jpeg, image/svg+xml", data: { action: "change->file-upload#updateFileName" }, class: "file-input" %>

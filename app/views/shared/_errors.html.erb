@@ -1,0 +1,11 @@
+<% if object.errors.any? %>
+  <div class="notification is-danger">
+    <p><strong><%= object.errors.count %>
+        error(s) found:</strong></p>
+    <ul>
+      <% object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

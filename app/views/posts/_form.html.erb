@@ -1,5 +1,6 @@
 <%= turbo_frame_tag(dom_id(Post.new)) do %>
   <div class="box has-background-light m-2">
+    <%= render partial: "shared/errors", locals: { object: post } %>
     <%= form_with model: post, url: posts_path, method: :post, remote: true,
         data: {
           turbo_frame: dom_id(Post.new),

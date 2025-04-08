@@ -1,5 +1,6 @@
 <%= turbo_frame_tag("#{dom_id(Comment.new)}_for_#{post.id}") do %>
   <div class="box has-background-light m-2">
+    <%= render partial: "shared/errors", locals: { object: comment } %>
     <%= form_with model: comment, url: post_comments_path, method: :post, remote: true do |form| %>
       <div class="media-content">
         <div class="field">
