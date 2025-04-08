@@ -274,7 +274,7 @@ Devise.setup do |config|
   config.omniauth(
     :github,
     Rails.application.credentials.dig(:github, :client_id),
-    Rails.application.credentials.dig(:github, client_secret),
+    Rails.application.credentials.dig(:github, :client_secret),
     scope: "user:email"
   )
 
