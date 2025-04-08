@@ -4,7 +4,7 @@ class Profile < ApplicationRecord
 
   validates :avatar, presence: true
   validates :name, presence: true, length: { minimum: 4, maximum: 30 }
-  validates :username, presence: true, length: { minimum: 3, maximum: 15 }, uniqueness: true
+  validates :username, presence: true, length: { minimum: 3 }, uniqueness: true
   validate :avatar_format
 
   private
