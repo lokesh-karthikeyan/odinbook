@@ -109,6 +109,7 @@ class User < ApplicationRecord
     profile.save
 
     attach_avatar if profile.avatar.blank?
+    UserMailer.with(user: self).welcome.deliver_now
   end
 
   def base_username = (email.split("@").first)
