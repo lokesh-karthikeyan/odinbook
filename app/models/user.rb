@@ -11,10 +11,12 @@ class User < ApplicationRecord
     omniauth_providers: %i[github]
   )
 
-  after_create :create_profile, :attach_avatar, :generate_random_name
+  after_create :setup_profile
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true
+
+  attr_accessor :oauth_name, :oauth_bio
 
   has_many(
     :active_relations,
@@ -82,22 +84,32 @@ class User < ApplicationRecord
     new_user = find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-    end
 
-    if new_user
-      new_user.build_profile(
-        name: auth.info.name || new_user.generate_random_name,
-        bio: auth.info.bio,
-        username: new_user.generate_unique_username
-      )
-      new_user.profile.save
-      new_user.attach_avatar
+      user.oauth_name = auth.info.name
+      user.oauth_bio = auth.info.bio || ""
     end
 
     new_user
   end
 
-  def create_profile = (build_profile(username: generate_unique_username).save)
+  private
+
+  def setup_profile
+    profile_data = if provider && uid
+      {
+        name: oauth_name || generate_random_name,
+        username: generate_unique_username,
+        bio: oauth_bio || ""
+      }
+    else
+      { name: generate_random_name, username: generate_unique_username, bio: "" }
+    end
+
+    build_profile(profile_data)
+    profile.save
+
+    attach_avatar if profile.avatar.blank?
+  end
 
   def base_username = (email.split("@").first)
 
@@ -108,7 +120,7 @@ class User < ApplicationRecord
     end
   end
 
-  def generate_random_name = (profile.update(name: NameGenerator.generate) unless self&.profile&.name&.present?)
+  def generate_random_name = (NameGenerator.generate)
 
   def attach_avatar
     initials = base_username.first.upcase
@@ -118,10 +130,4 @@ class User < ApplicationRecord
     temp_file.rewind
     profile.avatar.attach(io: temp_file, filename: "avatar.svg", content_type: "image/svg+xml")
   end
-
-  private
-
-  def create_profile = (build_profile(username: generate_unique_username).save)
-
-  def base_username = (email.split("@").first)
 end
