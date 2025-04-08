@@ -2,6 +2,7 @@ class Profile < ApplicationRecord
   belongs_to :user, inverse_of: :profile
   has_one_attached :avatar
 
+  validates :avatar, presence: true
   validates :name, presence: true, length: { minimum: 4, maximum: 30 }
   validates :username, presence: true, length: { minimum: 3, maximum: 15 }, uniqueness: true
   validate :avatar_format
