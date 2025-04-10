@@ -1,24 +1,11 @@
-# README
+# OdinBook
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Social media like application with an authentication by **Email** and a **Password** (or) can also *sign up* with **Github**.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- User can create & delete posts.
+- The posts can contain an image (or) text (or) both.
+- Other users can like the post and make a comment.
+- User can make a **Follow** request & the other user can *Accept* (or) *Reject*.
+- User can edit the profile including the avatar.
