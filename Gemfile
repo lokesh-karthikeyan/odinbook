@@ -80,3 +80,5 @@ gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
 
 gem "faker", "~> 3.5"
+
+gem "dotenv-rails"
