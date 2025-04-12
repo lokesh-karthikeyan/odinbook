@@ -81,9 +81,10 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    host: <%= ENV["DB_HOST"] %>
     database: odinbook_production
     username: odinbook
-    password: <%= ENV["ODINBOOK_DATABASE_PASSWORD"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: odinbook_production_cache
