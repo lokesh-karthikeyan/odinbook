@@ -15,6 +15,10 @@ ssh:
   user: ubuntu
   keys: ["~/Downloads/odinbook_ssh.pem"]
 
+proxy:
+  ssl: true
+  host: localhost
+
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
