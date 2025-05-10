@@ -70,7 +70,7 @@ group :test do
   gem "shoulda-matchers", "~> 6.0"
 end
 
-gem "bulma-rails", "~> 1.0.0"
+gem "bulma-rails", "~> 1.0.4"
 
 gem "dartsass-rails", "~> 0.5.1"
 
